@@ -4,14 +4,12 @@ import { mapState, mapGetters } from 'vuex'
 import { date } from 'quasar'
 
 import EventBus from 'src/utils/event-bus'
-import { isValidDateString } from 'src/utils/time'
 import { extractLocationDataFromPlace, isPlaceSearchEnabled } from 'src/utils/places'
 import logger from 'src/utils/logger'
 
 import BasicHeroLayout from 'src/layouts/BasicHeroLayout'
 
 import CustomAttributesEditor from 'src/components/CustomAttributesEditor'
-import PlacesAutocomplete from 'src/components/PlacesAutocomplete'
 import SelectAssetType from 'src/components/SelectAssetType'
 import SelectCategories from 'src/components/SelectCategories'
 
@@ -23,7 +21,6 @@ export default {
     BasicHeroLayout,
 
     CustomAttributesEditor,
-    PlacesAutocomplete,
     SelectAssetType,
     SelectCategories,
   },
@@ -40,7 +37,6 @@ export default {
       price: null,
       startDate: '',
       endDate: '',
-      quantity: 1,
       locations: [],
       isPlaceSearchEnabled,
       options: ['option1'],
@@ -142,20 +138,6 @@ export default {
         steps[3] = true
       }
 
-      let isValidStartDate = true
-      let isValidEndDate = true
-      if (this.startDate) {
-        isValidStartDate = isValidDateString(this.startDate)
-      }
-      if (this.endDate) {
-        isValidEndDate = isValidDateString(this.endDate)
-      }
-
-      if (!this.showAvailabilityDates || (this.showAvailabilityDates && isValidStartDate && isValidEndDate)) {
-        // endDate is optional, so is quantity
-        steps[4] = true
-      }
-
       // Index of first falsy step
       return steps.indexOf(false) >= 0 ? steps.indexOf(false) - 1 : steps.length - 1
     },
@@ -250,8 +232,6 @@ export default {
               return img
             }) */
 
-          let assetQuantity = this.quantity
-
           const shouldCreateAvailability = this.showAvailabilityDates && this.startDate
 
           const availabilityAttrs = {}
@@ -262,14 +242,11 @@ export default {
             if (!isAnUnavailability) {
               availabilityAttrs.startDate = this.startDate
               availabilityAttrs.endDate = this.endDate
-              availabilityAttrs.quantity = this.quantity
 
               // we want the asset to be available only during the availability period
-              assetQuantity = 0
             } else {
               availabilityAttrs.startDate = date.addToDate(new Date(), { year: -1 }).toISOString()
               availabilityAttrs.endDate = this.startDate
-              availabilityAttrs.quantity = 0
             }
           }
 
@@ -279,7 +256,6 @@ export default {
             assetTypeId: (this.selectedAssetType && this.selectedAssetType.id) || undefined, // `null` not allowed
             description: this.description,
             price: this.price,
-            quantity: this.selectedAssetType ? (this.selectedAssetType.infiniteStock ? 1 : assetQuantity) : 1,
             locations: this.locations,
             categoryId: this.selectedCategory ? this.selectedCategory.id : null,
             customAttributes: pick(this.editingCustomAttributes, this.editableCustomAttributeNames),
@@ -354,7 +330,6 @@ export default {
       this.price = null
       this.startDate = ''
       this.endDate = ''
-      this.quantity = 1
       this.locations = []
       this.selectedCategory = null
       this.editingCustomAttributes = {}
@@ -386,12 +361,6 @@ export default {
         entry="pages"
         field="new_asset.header"
       />
-      <AppContent
-        class="text-h6"
-        tag="h2"
-        entry="pages"
-        field="new_asset.header"
-      />
     </template>
 
     <section class="q-pa-sm">
@@ -400,9 +369,6 @@ export default {
         @submit.prevent="createAsset"
       >
         <div class="step-1 q-py-lg">
-          <div class="text-h5">
-            {{ $t({ id: 'pages.new_asset.form_header' }) }}
-          </div>
           <div class="row justify-center">
             <QInput
               v-model="name"
@@ -481,51 +447,6 @@ export default {
             v-if="step > 2"
             class="step-3 q-py-lg"
           >
-            <AppDateRangePicker
-              v-show="showAvailabilityDates"
-              class="q-mb-xl"
-              :start-date="startDate"
-              :end-date="endDate"
-              :missing-end-date-meaning="$t({ id: 'time.missing_end_date_meaning' })"
-              bottom-slots
-              @changeStartDate="selectStartDate"
-              @changeEndDate="selectEndDate"
-            />
-
-            <div class="row justify-around">
-              <div v-if="isPlaceSearchEnabled" class="col-12 col-sm-5">
-                <PlacesAutocomplete
-                  :label="$t({ id: 'places.address_placeholder' })"
-                  :initial-query="locationName"
-                  bottom-slots
-                  @selectPlace="selectPlace"
-                />
-              </div>
-              <div
-                v-show="!selectedAssetType || !selectedAssetType.infiniteStock"
-                class="col-12 col-sm-5"
-              >
-                <AppInputNumber
-                  v-model="quantity"
-                  :label="$t({ id: 'asset.quantity_label' })"
-                  required
-                  min="0"
-                  :rules="[
-                    quantity => quantity > 0 ||
-                      $t({ id: 'form.error.missing_field' })
-                  ]"
-                  bottom-slots
-                />
-              </div>
-            </div>
-          </div>
-        </transition>
-
-        <transition enter-active-class="animated fadeInUp">
-          <div
-            v-if="step > 3"
-            class="step-4 q-py-lg"
-          >
             <div class="row justify-around">
               <div class="col-12 col-md-7">
                 <QInput
@@ -582,7 +503,7 @@ export default {
 
             <div class="step-asset-picture q-py-lg">
               <AppContent
-                class="text-h5"
+                class="text-body2"
                 tag="h3"
                 entry="pages"
                 field="new_asset.picture_incentive"
@@ -599,7 +520,7 @@ export default {
               :loading="creatingAsset"
               :label="$t( { id: 'prompt.create_button' })"
               :rounded="style.roundedTheme"
-              :disabled="step < 4 || !uploaderFiles.length"
+              :disabled="step < 3"
               color="secondary"
               size="lg"
               type="submit"

@@ -134,6 +134,8 @@
           </div>
         </div>
 
+        <p>Download: <a :href="assetFile().url">{{ assetFile().name }}</a></p>
+
         <div class="q-pa-sm text-body1">
           <AppContent
             tag="h3"
@@ -484,6 +486,10 @@ export default {
     }
   },
   methods: {
+    assetFile () {
+      const { name, url } = this.activeAsset.metadata.files[0]
+      return { name, url }
+    },
     afterAuth () {
       // Not blocking. Move to (blocking) preFetch and remove $route watcher if optimizing for SEO
       // with server-side rendering (SSR)

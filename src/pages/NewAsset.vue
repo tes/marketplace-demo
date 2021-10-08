@@ -229,8 +229,6 @@ export default {
             customAttributes: pick(this.editingCustomAttributes, this.editableCustomAttributeNames),
             active: true,
             validated: true,
-            metadata: {
-            }
           }
 
           if (this.content.currency) {
@@ -453,20 +451,6 @@ export default {
               />
             </div>
 
-            <!-- <div class="step-asset-picture q-py-lg">
-              <AppContent
-                class="text-body2"
-                tag="h3"
-                entry="pages"
-                field="new_asset.picture_incentive"
-              />
-              <AppGalleryUploader
-                @uploader-files-changed="uploaderFilesChanged"
-                @upload-completed="uploadCompleted"
-                @remove="removeImage"
-              />
-            </div> -->
-
             <QBtn
               class="q-my-md text-weight-bold"
               :loading="creatingAsset"
@@ -477,13 +461,6 @@ export default {
               size="lg"
               type="submit"
             />
-            <!-- <AppContent
-              v-show="!uploaderFiles.length"
-              tag="div"
-              class="text-body2 text-center text-grey q-pa-sm"
-              entry="form"
-              field="error.missing_image"
-            /> -->
           </div>
         </transition>
       </form>

@@ -1,7 +1,6 @@
 <script>
 import { compact, flatten, get, groupBy, values, pick } from 'lodash'
 import { mapState, mapGetters } from 'vuex'
-import { date } from 'quasar'
 
 import EventBus from 'src/utils/event-bus'
 import { extractLocationDataFromPlace, isPlaceSearchEnabled } from 'src/utils/places'
@@ -217,39 +216,8 @@ export default {
         return
       }
 
-      if (this.step > 3) {
+      if (this.step === 3) {
         try {
-          const uploadPending = this.uploaderFiles.length && this.assetImages.length < this.uploaderFiles.length
-          this.creatingAsset = true
-
-          // if upload is processing, do not perform the asset creation logic right now
-          // the logic will be triggered at the end of the upload from afterUploadCompleted
-          if (uploadPending) return
-
-          const images = this.assetImages
-          /* .map(img => { // clean reused images
-              delete img.reused
-              return img
-            }) */
-
-          const shouldCreateAvailability = this.showAvailabilityDates && this.startDate
-
-          const availabilityAttrs = {}
-
-          if (shouldCreateAvailability) {
-            const isAnUnavailability = !this.endDate
-
-            if (!isAnUnavailability) {
-              availabilityAttrs.startDate = this.startDate
-              availabilityAttrs.endDate = this.endDate
-
-              // we want the asset to be available only during the availability period
-            } else {
-              availabilityAttrs.startDate = date.addToDate(new Date(), { year: -1 }).toISOString()
-              availabilityAttrs.endDate = this.startDate
-            }
-          }
-
           const attrs = {
             // autogrow on name QInput makes it a textarea, with possible line returns
             name: this.name.replace('\n', ''),
@@ -261,12 +229,6 @@ export default {
             customAttributes: pick(this.editingCustomAttributes, this.editableCustomAttributeNames),
             active: true,
             validated: true,
-            metadata: {
-              images,
-              // Save dates to create custom availabilities with Workflows
-              startDate: this.startDate,
-              endDate: this.endDate
-            }
           }
 
           if (this.content.currency) {
@@ -274,11 +236,6 @@ export default {
           }
 
           const asset = await this.$store.dispatch('createAsset', { attrs })
-
-          if (shouldCreateAvailability) {
-            availabilityAttrs.assetId = asset.id
-            await this.$store.dispatch('createAvailability', { attrs: availabilityAttrs })
-          }
 
           this.notifySuccess('notification.saved')
           // this.resetForm() // useful when not keeping the user on the current page
@@ -290,13 +247,6 @@ export default {
           if (needUpdateUser) {
             const attrs = {}
 
-            if (updateUserImages) {
-              const currentUserImages = this.currentUser.images.map(img => img.name)
-              // Ensuring we create no duplicate if user has logged in after uploading existing images
-              const dedup = this.newUserImages.filter(img => !currentUserImages.includes(img.name))
-
-              attrs.images = this.currentUser.images.concat(dedup)
-            }
             if (updateUserLocations) {
               attrs.locations = [asset.locations[0]]
             }
@@ -501,20 +451,6 @@ export default {
               />
             </div>
 
-            <div class="step-asset-picture q-py-lg">
-              <AppContent
-                class="text-body2"
-                tag="h3"
-                entry="pages"
-                field="new_asset.picture_incentive"
-              />
-              <AppGalleryUploader
-                @uploader-files-changed="uploaderFilesChanged"
-                @upload-completed="uploadCompleted"
-                @remove="removeImage"
-              />
-            </div>
-
             <QBtn
               class="q-my-md text-weight-bold"
               :loading="creatingAsset"
@@ -524,13 +460,6 @@ export default {
               color="secondary"
               size="lg"
               type="submit"
-            />
-            <AppContent
-              v-show="!uploaderFiles.length"
-              tag="div"
-              class="text-body2 text-center text-grey q-pa-sm"
-              entry="form"
-              field="error.missing_image"
             />
           </div>
         </transition>

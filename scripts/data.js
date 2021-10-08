@@ -32,7 +32,7 @@ module.exports = {
       description: `Resource description`,
       assetTypeId: 'assetTypes::paid',
       categoryId: 'categories::maths',
-      ownerId: 'users::user1',
+      ownerId: 'users::user2',
       price: 3.50,
       currency: "GBP",
       validated: true,
@@ -40,9 +40,16 @@ module.exports = {
       customAttributes: {},
       metadata: {
         images: [
-          { name: 'aix-1', url: 'https://stelace-instant-files.s3.amazonaws.com/p/238380/live/images/76fe774a40e19a2d56fdfd862b82c814-aix-1.jpg' },
-          { name: 'aix-2', url: 'https://stelace-instant-files.s3.amazonaws.com/p/238380/live/images/b855f98d62fea4c380d3336cf2169db7-aix-2.jpg' },
-          { name: 'aix-3', url: 'https://stelace-instant-files.s3.amazonaws.com/p/238380/live/images/03fba6aeda5a0240de8f401879bf5f4a-aix-3.jpg' }
+          {
+            name: 'screenshot',
+            url: './resource-files/tes-resource-img.png'
+          }
+        ],
+        files: [
+          {
+            name: 'test-pdf',
+            url: './resource-files/test.pdf'
+          }
         ]
       }
     },
@@ -51,7 +58,7 @@ module.exports = {
       description: `Resource description 2`,
       assetTypeId: 'assetTypes::paid',
       categoryId: 'categories::science',
-      ownerId: 'users::user2',
+      ownerId: 'users::user1',
       price: 5.00,
       currency: "GBP",
       validated: true,

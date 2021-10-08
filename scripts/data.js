@@ -42,13 +42,13 @@ module.exports = {
         images: [
           {
             name: 'screenshot',
-            url: './resource-files/tes-resource-img.png'
+            url: './resource-files/test-resource.png'
           }
         ],
         files: [
           {
             name: 'test-pdf',
-            url: './resource-files/test.pdf'
+            url: './resource-files/test-resource-file.pdf'
           }
         ]
       }
@@ -66,9 +66,16 @@ module.exports = {
       customAttributes: {},
       metadata: {
         images: [
-          { name: 'aix-1', url: 'https://stelace-instant-files.s3.amazonaws.com/p/238380/live/images/76fe774a40e19a2d56fdfd862b82c814-aix-1.jpg' },
-          { name: 'aix-2', url: 'https://stelace-instant-files.s3.amazonaws.com/p/238380/live/images/b855f98d62fea4c380d3336cf2169db7-aix-2.jpg' },
-          { name: 'aix-3', url: 'https://stelace-instant-files.s3.amazonaws.com/p/238380/live/images/03fba6aeda5a0240de8f401879bf5f4a-aix-3.jpg' }
+          {
+            name: 'screenshot',
+            url: './resource-files/test-resource.png'
+          }
+        ],
+        files: [
+          {
+            name: 'test-pdf',
+            url: './resource-files/test-resource-file.pdf'
+          }
         ]
       }
     }
@@ -86,9 +93,16 @@ module.exports = {
     customAttributes: {},
     metadata: {
       images: [
-        { name: 'aix-1', url: 'https://stelace-instant-files.s3.amazonaws.com/p/238380/live/images/76fe774a40e19a2d56fdfd862b82c814-aix-1.jpg' },
-        { name: 'aix-2', url: 'https://stelace-instant-files.s3.amazonaws.com/p/238380/live/images/b855f98d62fea4c380d3336cf2169db7-aix-2.jpg' },
-        { name: 'aix-3', url: 'https://stelace-instant-files.s3.amazonaws.com/p/238380/live/images/03fba6aeda5a0240de8f401879bf5f4a-aix-3.jpg' }
+        {
+          name: 'screenshot',
+          url: './resource-files/test-resource.png'
+        }
+      ],
+      files: [
+        {
+          name: 'test-pdf',
+          url: './resource-files/test-resource-file.pdf'
+        }
       ]
     }
   },
@@ -246,12 +260,12 @@ module.exports = {
   },
   users: {
     user1: {
-      username: `user@tes.com`,
-      password: `user@tes.com`,
-      email: `user@tes.com`,
-      displayName: 'AUser',
-      firstname: 'A',
-      lastname: 'User',
+      username: `larry@tes.com`,
+      password: `larry@tes.com`,
+      email: `larry@tes.com`,
+      displayName: 'Larry',
+      firstname: 'Last',
+      lastname: 'Minute Larry',
       metadata: {
         instant: {
           avatarUrl: 'https://stelace-instant-files.s3.eu-central-1.amazonaws.com/p/238380/live/images/b857b499cb5da04af538d320ae6c28cc-Jeanne.png'
@@ -259,12 +273,12 @@ module.exports = {
       }
     },
     user2: {
-      username: `seller@tes.com`,
-      password: `seller@tes.com`,
-      email: `seller@tes.com`,
-      displayName: 'ASeller',
-      firstname: 'A',
-      lastname: 'Seller',
+      username: `mona@tes.com`,
+      password: `mona@tes.com`,
+      email: `mona@tes.com`,
+      displayName: 'Mona',
+      firstname: 'Mona',
+      lastname: 'The Money Maker',
       metadata: {
         instant: {
           avatarUrl: 'https://stelace-instant-files.s3.eu-central-1.amazonaws.com/p/238380/live/images/b857b499cb5da04af538d320ae6c28cc-Jeanne.png'

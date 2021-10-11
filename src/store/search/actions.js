@@ -61,7 +61,6 @@ export async function searchAssets ({ state, rootState, rootGetters, commit, dis
     nbResultsPerPage: searchFilters.nbResultsPerPage,
     orderBy: searchFilters.orderBy,
     order: searchFilters.order,
-
     maxDistance: state.useMapCenter ? state.maxDistance : state.defaultMaxDistance,
     query: state.query,
     location: !state.useMapCenter ? {
@@ -74,15 +73,12 @@ export async function searchAssets ({ state, rootState, rootGetters, commit, dis
     filters: Object.assign({}, searchFilters.filters, {
       active: true,
       validated: true,
-
       // won't show assets that haven't at least one quantity during the specified period
       // or after now if no dates are specified
       quantity: 1,
-
       startDate: state.startDate,
       endDate: state.endDate,
       assetTypeId: state.assetTypesIds && state.assetTypesIds.length ? state.assetTypesIds : null,
-
       price: {
         gte: state.priceRange.min,
         lte: state.priceRange.max,
@@ -90,7 +86,6 @@ export async function searchAssets ({ state, rootState, rootGetters, commit, dis
     }),
     customAttributesFilters: pick(searchFilters.customAttributesFilters, state.displayCustomAttributes)
   })
-
   commit({
     type: types.SET_SEARCHING_ASSETS,
     isSearching: false

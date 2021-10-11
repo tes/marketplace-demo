@@ -36,6 +36,7 @@ module.exports = {
       price: 3.50,
       currency: "GBP",
       validated: true,
+      quantity: 1,
       active: true,
       customAttributes: {},
       metadata: {
@@ -63,6 +64,7 @@ module.exports = {
       currency: "GBP",
       validated: true,
       active: true,
+      quantity: 1,
       customAttributes: {},
       metadata: {
         images: [
@@ -78,32 +80,33 @@ module.exports = {
           }
         ]
       }
-    }
-  },
-  exampleResource2: {
-    name: 'Example Resource 3',
-    description: `Resource description 3`,
-    assetTypeId: 'assetTypes::free',
-    categoryId: 'categories::science',
-    ownerId: 'users::user2',
-    price: 0.00,
-    currency: "GBP",
-    validated: true,
-    active: true,
-    customAttributes: {},
-    metadata: {
-      images: [
-        {
-          name: 'screenshot',
-          url: './resource-files/test-resource.png'
-        }
-      ],
-      files: [
-        {
-          name: 'test-pdf',
-          url: './resource-files/test-resource-file.pdf'
-        }
-      ]
+    },
+    exampleResource2: {
+      name: 'Example Resource 3',
+      description: `Resource description 3`,
+      assetTypeId: 'assetTypes::free',
+      categoryId: 'categories::science',
+      ownerId: 'users::user2',
+      price: 0.00,
+      quantity: 1,
+      currency: "GBP",
+      validated: true,
+      active: true,
+      customAttributes: {},
+      metadata: {
+        images: [
+          {
+            name: 'screenshot',
+            url: './resource-files/test-resource.png'
+          }
+        ],
+        files: [
+          {
+            name: 'test-pdf',
+            url: './resource-files/test-resource-file.pdf'
+          }
+        ]
+      }
     }
   },
   categories: {
@@ -129,46 +132,32 @@ module.exports = {
           locale,
           currency: 'GBP',
           assetTypes: {
-            'assetTypes::renting': {
-              customAttributes: [
-                'scenery',
-              ]
-            },
-            'assetTypes::selling': {
-              customAttributes: [
-                'passive',
-                'scenery',
-              ]
-            }
+            'assetTypes::paid': {},
+            'assetTypes::free': {}
           },
           searchOptions: {
             modes: {
               default: {
-                assetTypesIds: ['assetTypes::renting', 'assetTypes::selling'],
+                assetTypesIds: ['assetTypes::paid', 'assetTypes::free'],
                 customAttributes: [
-                  'passive',
-                  'scenery'
                 ],
                 isActiveFor: [
                   'public',
                   'user'
                 ]
               },
-              renting: {
-                assetTypesIds: ['assetTypes::renting'],
+              paid: {
+                assetTypesIds: ['assetTypes::paid'],
                 customAttributes: [
-                  'scenery'
                 ],
                 isActiveFor: [
                   'public',
                   'user'
                 ]
               },
-              selling: {
-                assetTypesIds: ['assetTypes::selling'],
+              free: {
+                assetTypesIds: ['assetTypes::free'],
                 customAttributes: [
-                  'passive',
-                  'scenery'
                 ],
                 isActiveFor: [
                   'public',

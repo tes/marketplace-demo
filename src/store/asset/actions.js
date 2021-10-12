@@ -9,21 +9,16 @@ import p from 'src/utils/promise'
 
 export async function fetchLastAssets ({ dispatch, rootState, rootGetters }, { nbResults = 3 } = {}) {
   await dispatch('fetchConfig')
-
   const searchOptions = rootGetters.searchOptions
-  const assetTypeId = get(searchOptions, 'modes.default.assetTypesIds', [])
-
+  const assetTypeId = get(searchOptions, ['assetTypes::paid', 'assetTypes::free'], [])
   const filters = {
     active: true,
     validated: true,
-
     // won't show assets that haven't at least one quantity during the specified period
     // or after now if no dates are specified
     quantity: 1,
   }
-
   if (assetTypeId.length) filters.assetTypeId = assetTypeId
-
   const [
     assets
   ] = await Promise.all([
@@ -37,17 +32,14 @@ export async function fetchLastAssets ({ dispatch, rootState, rootGetters }, { n
     // dispatch('fetchCategories'), // uncomment if needed to populate AssetCard
     dispatch('fetchAssetTypes'), // needed for time unit
   ])
-
   const {
     assetTypesById,
     categoriesById,
   } = rootState.common
-
   const {
     ratingsOptions,
     ratingsActive,
   } = rootGetters
-
   if (ratingsActive) {
     const assetIds = assets.map(asset => asset.id)
     await dispatch('fetchRatingsStats', { assetId: assetIds, groupBy: 'assetId' })

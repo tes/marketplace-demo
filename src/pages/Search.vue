@@ -27,61 +27,6 @@
         />
       </div>
     </div>
-    <!-- Rebuilding the map with v-if for appropriate sizing
-    https://github.com/mapbox/mapbox-gl-js/issues/3265 -->
-    <QPageSticky
-      :class="`gt-${mapBreakpoint || 'sm'} col-md-4 full-height`"
-      position="top-right"
-    >
-      <QNoSsr>
-        <AppMap
-          v-if="mapSized || isSearchMapVisible"
-          v-show="isSearchMapVisible"
-          class="absolute-full"
-          :nav-control="{ show: true, position: 'top-left' }"
-          @map-resize="mapResized"
-          @map-load="mapLoaded"
-          @map-dragstart="mapMoveStarted"
-          @map-dragend="mapMoveEnded"
-          @map-zoomstart="mapMoveStarted"
-          @map-zoomend="mapMoveEnded"
-        />
-
-        <template v-if="searchAfterMapMoveActive && isSearchMapVisible">
-          <QBtn
-            v-show="!showRetriggerSearchLabel"
-            class="map-search-on-map-move bg-white q-py-sm"
-            size="sm"
-            @click="toggleSearchAfterMapMove"
-          >
-            <QCheckbox
-              :value="shouldSearchAfterMapMove"
-              dense
-              @input="toggleSearchAfterMapMove"
-            />
-
-            <AppContent
-              class="q-ml-sm"
-              entry="pages"
-              field="search.search_after_map_move"
-            />
-          </QBtn>
-          <QBtn
-            v-show="showRetriggerSearchLabel"
-            color="secondary"
-            class="map-search-on-map-move q-py-sm"
-            size="sm"
-            @click="triggerSearchWithMapCenter"
-          >
-            <AppContent
-              v-show="showRetriggerSearchLabel"
-              entry="pages"
-              field="search.redo_search"
-            />
-          </QBtn>
-        </template>
-      </QNoSsr>
-    </QPageSticky>
   </q-page>
 </template>
 
@@ -101,13 +46,6 @@ import AssetCard from 'src/components/AssetCard'
 import PageComponentMixin from 'src/mixins/pageComponent'
 
 export default {
-  components: {
-    AppMap: () => import(/* webpackChunkName: 'mapbox' */ 'mapbox-gl')
-      .then(mapbox => {
-        if (window && !window.mapboxgl) window.mapboxgl = mapbox.default
-        return import(/* webpackChunkName: 'mapbox' */ 'src/components/AppMap')
-      }),
-  },
   mixins: [
     PageComponentMixin,
   ],

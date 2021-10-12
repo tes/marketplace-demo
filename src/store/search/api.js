@@ -22,7 +22,6 @@ export const searchAssets = async ({
   const addToFilter = (expression, operator = '&&') => {
     filter += (filter ? ` ${operator} ${expression}` : expression)
   }
-
   const sortableBuiltIntAttributes = [
     'name',
     'validated',

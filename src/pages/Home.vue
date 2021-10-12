@@ -315,21 +315,6 @@ export default {
           entry="pages"
           field="home.header"
         />
-        <QTabs
-          v-model="searchMode"
-          class="q-my-sm hero__search-modes"
-          align="left"
-          breakpoint="0"
-          dense
-          no-caps
-        >
-          <QTab
-            v-for="mode in nonDefaultSearchModes"
-            :key="mode"
-            :name="mode"
-            :label="$t({ id: `form.search.modes.${mode}` })"
-          />
-        </QTabs>
         <form class="hero__search-bar row justify-center shadow-2" @submit.prevent="searchAssets">
           <div class="row no-wrap flex-item--grow">
             <QInput
@@ -473,6 +458,17 @@ export default {
         entry="pages"
         field="home.asset_gallery_header"
       />
+      <!-- unsearched assets -->
+      <div v-for="asset in assets" :key="asset.id" class="row q-col-gutter-md justify-center">
+        <slot>
+          <AssetCard
+            :key="id"
+            class="col-12 col-sm-6 col-md-3"
+            :asset="asset"
+          />
+        </slot>
+      </div>
+      <!-- searched assets -->
       <AppCarousel
         class="stl-content-container stl-content-container--xlarge margin-h-center"
         :items="assets"

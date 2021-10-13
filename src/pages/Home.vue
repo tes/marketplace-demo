@@ -412,26 +412,18 @@ export default {
         field="home.asset_gallery_header"
       />
       <!-- unsearched assets -->
-      <div v-for="asset in assets" :key="asset.id" class="row q-col-gutter-md justify-center">
-        <slot>
-          <AssetCard
-            :key="id"
-            class="col-12 col-sm-6 col-md-3"
-            :asset="asset"
-          />
-        </slot>
+      <div class="row q-col-gutter-md items-start">
+        <div v-for="asset in assets" :key="asset.id">
+          <slot>
+            <AssetCard
+              :key="id"
+              class="col-12 col-sm-6 col-md-3"
+              :asset="asset"
+            />
+          </slot>
+        </div>
       </div>
     </section>
-
-    <!-- Use this for testimonials -->
-    <!-- <section class="q-pa-lg">
-      <AppContent
-        tag="h3"
-        class="text-h5 text-center"
-        entry="pages"
-        field="home.testimonials_header"
-      />
-    </section> -->
 
     <AppFooter />
   </QPage>

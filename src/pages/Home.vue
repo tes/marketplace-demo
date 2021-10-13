@@ -421,14 +421,6 @@ export default {
           />
         </slot>
       </div>
-      <!-- searched assets -->
-      <AppCarousel
-        class="stl-content-container stl-content-container--xlarge margin-h-center"
-        :items="assets"
-        :nb-items-per-slide="nbAssetsVisiblePerSlide"
-        :nb-slides="nbCarouselSlides"
-        :active="showCarousel"
-      />
     </section>
 
     <!-- Use this for testimonials -->

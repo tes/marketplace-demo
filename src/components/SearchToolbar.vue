@@ -453,15 +453,6 @@ export default {
     </QDialog>
 
     <QSpace />
-
-    <QToggle
-      class="text-default-color gt-sm"
-      :value="isSearchMapVisible"
-      :label="$t({ id: 'pages.search.show_map' })"
-      color="positive"
-      left-label
-      @input="toggleSearchMap"
-    />
   </QToolbar>
 </template>
 

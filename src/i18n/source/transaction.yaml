@@ -110,7 +110,7 @@ transaction:
       en: Confirm
       fr: Confirmer
     withdraw_button:
-      en: Withdraw
+      en: Buy now
       fr: Se rétracter
   error:
     own_listing_transaction:

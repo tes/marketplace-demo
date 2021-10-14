@@ -446,7 +446,7 @@ $background-image-loaded-from = 640px
     align-items: center
 
 .hero__background
-  background-color: #6376ec
+  background-color: #FFE324
 .blurred-svg-background
   position: absolute
   z-index: -1

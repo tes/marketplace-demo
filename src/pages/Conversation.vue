@@ -335,65 +335,6 @@ export default {
           v-if="!messageDisabled"
           class="row justify-end items-start q-mb-none"
         >
-          <div
-            v-if="canUploadAttachments && fileUpload.bigger"
-            class="mobile-stacked q-pa-sm"
-          >
-            <QUploader
-              ref="uploader"
-              :factory="uploadFactory"
-              :filter="uploadFilter"
-              auto-upload
-              flat
-              square
-              @added="filesAdded"
-              @removed="filesRemoved"
-              @uploaded="filesUploaded"
-              @failed="filesFailed"
-            >
-              <template #header="scope">
-                <div
-                  class="row no-wrap items-center q-px-sm q-py-md q-gutter-xs cursor-pointer relative-position"
-                >
-                  <!-- Relative positionning of parent is needed for QUploaderAddTriger -->
-                  <QUploaderAddTrigger />
-                  <QSpinner
-                    v-if="scope.isUploading"
-                    class="q-uploader__spinner"
-                  />
-                  <div class="col text-center">
-                    <AppContent
-                      tag="div"
-                      class="q-uploader__title"
-                      entry="prompt"
-                      field="upload_attachments_button"
-                    />
-                    <div
-                      v-if="scope.files.length"
-                      class="q-uploader__subtitle"
-                    >
-                      {{ scope.uploadSizeLabel }} / {{ scope.uploadProgressLabel }}
-                    </div>
-                  </div>
-                  <QBtn
-                    v-if="scope.editable && scope.isUploading"
-                    :icon="icons.matClear"
-                    round
-                    dense
-                    flat
-                    @click="scope.abort"
-                  >
-                    <AppContent
-                      tag="QTooltip"
-                      class="q-uploader__title"
-                      entry="prompt"
-                      field="cancel_button"
-                    />
-                  </QBtn>
-                </div>
-              </template>
-            </QUploader>
-          </div>
           <QInput
             v-model="draftMessage"
             class="mobile-stacked q-pb-md"

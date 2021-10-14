@@ -384,7 +384,6 @@ module.exports = {
 
   },
   ratings: {
-
   },
   transactions: {
 

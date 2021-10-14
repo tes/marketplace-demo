@@ -252,6 +252,7 @@ export default {
         <div class="row justify-center">
           <AssetCard
             :asset="inbox.asset"
+            :show-download="true"
             class="mobile-stacked"
           />
           <div class="mobile-stacked conversation__details">

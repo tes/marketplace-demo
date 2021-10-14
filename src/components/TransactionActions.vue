@@ -87,7 +87,7 @@ export default {
         let entryField = 'prompt.reject_button'
 
         if (this.actions.cancellationReason === 'withdrawn') {
-          entryField = 'prompt.withdraw_button'
+          entryField = ''
         }
 
         transactionActions.push({
@@ -138,7 +138,7 @@ export default {
 
 <template>
   <div :class="[containerClass]">
-    <QBtn
+    <!-- <QBtn
       v-for="action in transactionActions"
       :key="action.transitionName"
       :class="[buttonClass || 'q-ma-xs']"
@@ -152,7 +152,7 @@ export default {
         entry="transaction"
         :field="action.entryField"
       />
-    </QBtn>
+    </QBtn> -->
     <QBtn
       v-if="promptRatings"
       :class="[buttonClass || 'q-ma-xs']"

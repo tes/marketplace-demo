@@ -258,54 +258,7 @@ export default {
         (blurredBackgroundSVG || style.homeHeroUrl) && !style.homeHasLightBackground ? 'text-white' : ''
       ]"
     >
-      <div class="hero__background absolute-full">
-        <!-- Blurred SVG background when loading page and background image.
-            SVG is permanently used on small screens for which no <picture> source is loaded.
-            It is also a fallback for browsers not supporting <picture> (and object-fit) such as IE11 -->
-        <!-- eslint-disable-next-line vue/no-v-html -->
-        <div class="blurred-svg-background" v-html="blurredBackgroundSVG" />
-        <picture>
-          <source
-            type="image/webp"
-            :srcset="`${
-              getHomeHeroUrlTransformed({ width: 1024 })
-            } 1024w, ${
-              getHomeHeroUrlTransformed({ width: 1366 })
-            } 1366w, ${
-              getHomeHeroUrlTransformed({ width: 1600 })
-            } 1600w, ${
-              getHomeHeroUrlTransformed({ width: 1920 })
-            } 1920w, ${
-              getHomeHeroUrlTransformed({ width: 2560 })
-            } 2560w`"
-            sizes="100vw"
-            media="(min-width: 640px)"
-          >
-          <!-- Handle browsers not supporting WebP, contrasting with prerendering env (Puppeter) -->
-          <!-- TODO: remove WebP test when upgrading to AWS image handler version supporting AUTO_WEBP -->
-          <source
-            :srcset="`${
-              getHomeHeroUrlTransformed({ noWebP: true, width: 1024 })
-            } 1024w, ${
-              getHomeHeroUrlTransformed({ noWebP: true, width: 1366 })
-            } 1366w, ${
-              getHomeHeroUrlTransformed({ noWebP: true, width: 1600 })
-            } 1600w, ${
-              getHomeHeroUrlTransformed({ noWebP: true, width: 1920 })
-            } 1920w, ${
-              getHomeHeroUrlTransformed({ noWebP: true, width: 2560 })
-            } 2560w`"
-            sizes="100vw"
-            media="(min-width: 640px)"
-          >
-          <!-- Transparent GIF for browsers not supporting <picture> -->
-          <img
-            :src="content.blankImageBase64"
-            :alt="$t({ id: 'pages.home.page_title' })"
-            class="fit"
-          >
-        </picture>
-      </div>
+      <div class="hero__background absolute-full" />
       <div class="hero__search stl-content-container stl-content-container--xlarge">
         <AppContent
           tag="h1"
@@ -459,34 +412,18 @@ export default {
         field="home.asset_gallery_header"
       />
       <!-- unsearched assets -->
-      <div v-for="asset in assets" :key="asset.id" class="row q-col-gutter-md justify-center">
-        <slot>
-          <AssetCard
-            :key="id"
-            class="col-12 col-sm-6 col-md-3"
-            :asset="asset"
-          />
-        </slot>
+      <div class="row q-col-gutter-md items-start">
+        <div v-for="asset in assets" :key="asset.id">
+          <slot>
+            <AssetCard
+              :key="id"
+              class="col-12 col-sm-6 col-md-3"
+              :asset="asset"
+            />
+          </slot>
+        </div>
       </div>
-      <!-- searched assets -->
-      <AppCarousel
-        class="stl-content-container stl-content-container--xlarge margin-h-center"
-        :items="assets"
-        :nb-items-per-slide="nbAssetsVisiblePerSlide"
-        :nb-slides="nbCarouselSlides"
-        :active="showCarousel"
-      />
     </section>
-
-    <!-- Use this for testimonials -->
-    <!-- <section class="q-pa-lg">
-      <AppContent
-        tag="h3"
-        class="text-h5 text-center"
-        entry="pages"
-        field="home.testimonials_header"
-      />
-    </section> -->
 
     <AppFooter />
   </QPage>
@@ -509,11 +446,7 @@ $background-image-loaded-from = 640px
     align-items: center
 
 .hero__background
-  color: transparent
-  img
-    object-fit: cover
-    @media (max-width $background-image-loaded-from)
-      display: none
+  background-color: #FFE324
 .blurred-svg-background
   position: absolute
   z-index: -1

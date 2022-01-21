@@ -63,10 +63,10 @@ transaction:
       en: Rejected
       fr: Rejeté
     pending:
-      en: Pending
+      en: Your resource is now available to download via the link
       fr: En attente
     pending-acceptance:
-      en: Pending
+      en: Your resource is now available to download via the link
       fr: En attente
     validated:
       en: Validated
@@ -78,7 +78,7 @@ transaction:
       en: Cancelled
       fr: Annulé
     withdrawn:
-      en: Withdrawn
+      en: Bought
       fr: Rétracté
     information:
       en: Information
@@ -110,7 +110,7 @@ transaction:
       en: Confirm
       fr: Confirmer
     withdraw_button:
-      en: Withdraw
+      en: Buy now
       fr: Se rétracter
   error:
     own_listing_transaction:

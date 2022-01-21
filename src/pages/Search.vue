@@ -1,6 +1,6 @@
 <template>
   <q-page class="row items-stretch">
-    <div :class="['col-12 q-pa-md col-md-8']">
+    <div :class="['col-12 q-pa-md']">
       <div class="row q-col-gutter-md items-start">
         <AssetCard
           v-for="(asset, index) of searchResults"

@@ -8,6 +8,10 @@ export default {
       required: true,
       validator: a => typeof a === 'object',
     },
+    showDownload: {
+      type: Boolean,
+      default: false
+    },
     to: {
       validator: (value) => {
         if (isNil(value)) return true
@@ -80,106 +84,111 @@ export default {
 </script>
 
 <template>
-  <component
-    :is="!!asset ? 'router-link' : 'div'"
-    class="anchor-text--reset asset-card-container"
-    :to="to || (!!asset ? { name: 'asset', params: { id: asset.id } } : false)"
-  >
-    <QCard
-      flat
-      class="asset-card cursor-pointer"
+  <div>
+    <component
+      :is="!!asset ? 'router-link' : 'div'"
+      class="anchor-text--reset asset-card-container"
+      :to="to || (!!asset ? { name: 'asset', params: { id: asset.id } } : false)"
     >
-      <slot
-        :asset="asset"
-        name="image"
+      <QCard
+        flat
+        class="asset-card cursor-pointer"
       >
-        <div class="asset-image-container" :style="`padding-bottom: ${1 / baseImageRatio * 100}%`">
-          <QSkeleton
-            :class="[
-              showPlaceholder || isImageLoading || reloading ? '' : 'image-skeleton--hide',
-              'absolute-full image-skeleton'
-            ]"
-          />
-          <!-- Use native lazy loading (https://web.dev/native-lazy-loading/) -->
-          <img
-            v-if="!!asset"
-            class="asset-image"
-            :src="(asset && !reloading) ? getBaseImageUrl(asset) : content.blankImageBase64"
-            :srcset="imageSrcset || false"
-            :alt="asset ? asset.name : ''"
-            :sizes="imageSizes || false"
-            loading="lazy"
-            @load="isImageLoading = false"
-          >
-        </div>
-
-        <div
-          v-show="showDistance && typeof distanceKm === 'number'"
-          class="distance-chip absolute-top-left q-mt-sm q-ml-sm q-px-sm q-py-xs text-white"
+        <slot
+          :asset="asset"
+          name="image"
         >
-          <AppContent
-            entry="places"
-            field="distance_value"
-            :options="{ distance: distanceKm }"
-          />
-        </div>
-      </slot>
+          <div class="asset-image-container" :style="`padding-bottom: ${1 / baseImageRatio * 100}%`">
+            <QSkeleton
+              :class="[
+                showPlaceholder || isImageLoading || reloading ? '' : 'image-skeleton--hide',
+                'absolute-full image-skeleton'
+              ]"
+            />
+            <!-- Use native lazy loading (https://web.dev/native-lazy-loading/) -->
+            <img
+              v-if="!!asset"
+              class="asset-image"
+              :src="(asset && !reloading) ? getBaseImageUrl(asset) : content.blankImageBase64"
+              :srcset="imageSrcset || false"
+              :alt="asset ? asset.name : ''"
+              :sizes="imageSizes || false"
+              loading="lazy"
+              @load="isImageLoading = false"
+            >
+          </div>
 
-      <QCardSection class="asset-content q-py-xs q-px-sm">
-        <slot :asset="asset">
-          <h2
-            v-if="!showPlaceholder"
-            class="text-body1 text-weight-medium q-ma-none ellipsis"
+          <div
+            v-show="showDistance && typeof distanceKm === 'number'"
+            class="distance-chip absolute-top-left q-mt-sm q-ml-sm q-px-sm q-py-xs text-white"
           >
-            {{ asset.name }}
-          </h2>
-          <QSkeleton v-else type="text" class="text-body1 q-ma-none" />
+            <AppContent
+              entry="places"
+              field="distance_value"
+              :options="{ distance: distanceKm }"
+            />
+          </div>
+        </slot>
 
-          <div class="row justify-between">
-            <div
+        <QCardSection class="asset-content q-py-xs q-px-sm">
+          <slot :asset="asset">
+            <h2
               v-if="!showPlaceholder"
-              class="text-subtitle2 flex-item--grow text-grey-6 ellipsis"
+              class="text-body1 text-weight-medium q-ma-none ellipsis"
             >
-              <AppRatingStars
-                v-if="showRatings && ratingsActive"
-                :target="asset"
-                readonly
-              />
-              <div v-else>
-                {{ asset.locationName }}
-              </div>
-            </div>
-            <QSkeleton v-else type="text" class="text-subtitle2 flex-item--grow" />
+              {{ asset.name }}
+            </h2>
+            <QSkeleton v-else type="text" class="text-body1 q-ma-none" />
 
-            <div
-              v-if="asset && asset.price"
-              class="text-weight-bold text-grey-8 ellipsis"
-            >
-              <AppContent
-                v-if="asset.assetType && asset.assetType.timeBased"
-                entry="pricing"
-                field="price_per_time_unit_short_label"
-                :options="{
-                  price: $fx(asset.price),
-                  timeUnit: asset.timeUnit
-                }"
-              />
-              <AppContent
-                v-else
-                entry="pricing"
-                field="price_with_currency"
-                :options="{ price: $fx(asset.price) }"
-              />
-            </div>
+            <div class="row justify-between">
+              <div
+                v-if="!showPlaceholder"
+                class="text-subtitle2 flex-item--grow text-grey-6 ellipsis"
+              >
+                <AppRatingStars
+                  v-if="showRatings && ratingsActive"
+                  :target="asset"
+                  readonly
+                />
+                <div v-else>
+                  {{ asset.locationName }}
+                </div>
+              </div>
+              <QSkeleton v-else type="text" class="text-subtitle2 flex-item--grow" />
+
+              <div
+                v-if="asset && asset.price"
+                class="text-weight-bold text-grey-8 ellipsis"
+              >
+                <AppContent
+                  v-if="asset.assetType && asset.assetType.timeBased"
+                  entry="pricing"
+                  field="price_per_time_unit_short_label"
+                  :options="{
+                    price: $fx(asset.price),
+                    timeUnit: asset.timeUnit
+                  }"
+                />
+                <AppContent
+                  v-else
+                  entry="pricing"
+                  field="price_with_currency"
+                  :options="{ price: $fx(asset.price) }"
+                />
+              </div>
             <!-- <h3 class="text-subtitle2 text-weight-medium text-grey-6 q-ma-none text-right ellipsis">
               {{ categoryName }}
             </h3> -->
-          </div>
-          <slot name="bottom" />
-        </slot>
-      </QCardSection>
-    </QCard>
-  </component>
+            </div>
+            <slot name="bottom" />
+          </slot>
+        </QCardSection>
+      </QCard>
+    </component>
+    <p v-if="showDownload">
+      Download: <a :href="asset.metadata.files[0].url">{{ asset.metadata.files[0].name }}</a>
+    </p>
+  </div>
 </template>
 
 <style lang="stylus" scoped>

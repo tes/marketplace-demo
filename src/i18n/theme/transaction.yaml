@@ -5,13 +5,13 @@ transaction:
       fr: Validé
     cancelled:
       withdrawn:
-        en: Withdrawn
+        en: Bought
         fr: Retiré
       refusedByOwner:
         en: Rejected
         fr: Rejeté
       refusedByTaker:
-        en: Withdrawn
+        en: Bought
         fr: Retiré
       forceCancel:
         en: Cancelled

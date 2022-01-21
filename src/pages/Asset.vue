@@ -134,8 +134,6 @@
           </div>
         </div>
 
-        <p>Download: <a :href="assetFile().url">{{ assetFile().name }}</a></p>
-
         <div class="q-pa-sm text-body1">
           <AppContent
             tag="h3"

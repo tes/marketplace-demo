@@ -20,10 +20,10 @@ export default {
   appUpdateAvailable: false,
   appUpdateNoCache: true,
 
-  placeholderImageBaseUrl: 'https://placeimg.com',
+  placeholderImageBaseUrl: 'https://t4.ftcdn.net/jpg/00/68/85/89/360_F_68858900_7KRDOJQYfK0h6HvEbc4ZnHx84HZXtVOq.jpg',
   acceptWebP: false,
   // http://probablyprogramming.com/2009/03/15/the-tiniest-gif-ever
-  blankImageBase64: 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==',
+  blankImageBase64: 'https://t4.ftcdn.net/jpg/00/68/85/89/360_F_68858900_7KRDOJQYfK0h6HvEbc4ZnHx84HZXtVOq.jpg',
 
   contentEditing: false,
 

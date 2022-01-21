@@ -3,7 +3,7 @@ const priceDefaultMax = 10000
 
 export default {
   showSearchMap: false,
-  userShowSearchMap: null, // Boolean means user has explicitly set map visibility
+  userShowSearchMap: false, // Boolean means user has explicitly set map visibility
   // for consistent map display status during navigation.
   // Otherwise map could show up again despite showSearchMap previously set to false
   // Both of these variables enable to show map dynamically (like screen size detection).
